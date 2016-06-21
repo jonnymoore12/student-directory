@@ -4,6 +4,8 @@
 # whether there was a \r or \n at the end or not. Chomp, only removes
 # trailing \n or \r, so is generally preferable for this kind of use.
 
+# You could also slice() your way along, passing in [0..-2]
+
 def input_students
    puts "Please enter the names and cohorts of the students"
    puts "Please enter in the format: name, cohort"
