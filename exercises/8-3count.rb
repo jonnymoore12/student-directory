@@ -17,15 +17,20 @@ def print_header
 end
 
 def print(students)
-   students.each do |student|
+   students.each_with_index do |student, index|
       # Or you can use student["name"] if your hash was set up like so:
       # "name" => "Darth Vader", etc. (Two ways of doing it)
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+      count = 0
+      if student[:name].length < 12
+         puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+         count += 1
+      end
    end
 end
 
 def print_footer(names)
-   puts "Overall, we have #{names.count} great students"
+   puts "Overall, we have #{count} great students whose name is less than"
+   puts "12 characters long."
 end
 
 students = input_students

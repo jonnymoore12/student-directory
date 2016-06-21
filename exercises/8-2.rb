@@ -16,11 +16,13 @@ def print_header
    puts "--------------"
 end
 
-def print(students)
-   students.each do |student|
+def print(students, letter)
+   students.each_with_index do |student, index|
       # Or you can use student["name"] if your hash was set up like so:
       # "name" => "Darth Vader", etc. (Two ways of doing it)
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+      if student[:name][0].downcase == letter
+         puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+      end
    end
 end
 
@@ -30,5 +32,5 @@ end
 
 students = input_students
 print_header
-print(students)
+print(students, "j")
 print_footer(students)
