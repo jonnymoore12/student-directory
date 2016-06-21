@@ -5,6 +5,10 @@ def input_students
    students = []
    name_and_country = gets.chomp
    while !name_and_country.empty? do
+      while !name_and_country.include?(",")
+         puts "Please use the format name,country (with a \",\")"
+         name_and_country = gets.chomp
+      end
       name = name_and_country.split(",")[0]
       country = name_and_country.split(",")[1]
       country = country[1..-1] if country[0] == " "
