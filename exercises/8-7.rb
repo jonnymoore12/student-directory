@@ -10,8 +10,9 @@ def input_students
          name_and_cohort = gets.chomp
       end
       name = name_and_cohort.split(",")[0]
-      cohort = name_and_cohort.split(",")[1]
-      cohort = cohort[1..-1] if cohort[0] == " "
+      cohort = name_and_cohort.split(",")[1].capitalize
+      # Why do I need this capitalize here??
+      cohort = cohort[1..-1].capitalize if cohort[0] == " "
       students << {name: name, cohort: cohort}
       puts "We now have #{students.count} students"
       name_and_cohort = gets.chomp
@@ -33,7 +34,7 @@ def print(students)
 end
 
 def print_footer(names)
-   puts "Overall, we have #{names.count} nasty students."
+   puts "Overall, we have #{names.count} villainous students."
 end
 
 students = input_students
