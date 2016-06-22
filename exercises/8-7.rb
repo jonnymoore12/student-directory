@@ -1,6 +1,7 @@
 def input_students
    puts "Please enter the names and cohorts of the students"
    puts "Please enter in the format: name, cohort"
+   puts "Leave the cohort field blank if you do not know it"
    puts "To finish, just hit return twice"
    students = []
    name_and_cohort = gets.chomp
@@ -10,12 +11,17 @@ def input_students
          name_and_cohort = gets.chomp
       end
       name = name_and_cohort.split(",")[0]
-      cohort = name_and_cohort.split(",")[1].capitalize
-      # Why do I need this capitalize here??
-      cohort = cohort[1..-1].capitalize if cohort[0] == " "
-      students << {name: name, cohort: cohort}
-      puts "We now have #{students.count} students"
-      name_and_cohort = gets.chomp
+      if (name_and_cohort == name && !name_and_cohort.empty? ||
+         name_and_cohort == name + "," && !name_and_cohort.empty?)
+         cohort = "unspecified"
+      else
+         cohort = name_and_cohort.split(",")[1].capitalize
+         # Why do I need this capitalize here??
+         cohort = cohort[1..-1].capitalize if cohort[0] == " "
+         students << {name: name, cohort: cohort}
+         puts "We now have #{students.count} students"
+         name_and_cohort = gets.chomp
+      end
    end
    students
 end
