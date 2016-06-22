@@ -1,9 +1,13 @@
+# My code differs from the Makers code, since I am storing hobbies as well
+# I'm also checking user input for various typos
+# But then, I'm sure input_students could be refactored further
+
 @students = []
 
 def interactive_menu
    loop do
       print_menu
-      process(gets.chomp)
+      process(STDIN.gets.chomp)
    end
 end
 
@@ -46,11 +50,11 @@ def input_students
    puts "Leave the cohort or hobby field blank if you wish"
    puts "To finish, just hit return twice"
    @students = []
-   name_cohort_hobby = gets.chomp
+   name_cohort_hobby = STDIN.gets.chomp
    while !name_cohort_hobby.empty? do
       while name_cohort_hobby.count(",") != 2
          puts "Please use the format: name,cohort,hobby (with two \",\"s)"
-         name_cohort_hobby = gets.chomp
+         name_cohort_hobby = STDIN.gets.chomp
       end
       name = name_cohort_hobby.split(",")[0]
       cohort = name_cohort_hobby.split(",")[1].capitalize || "Unspecified"
@@ -59,13 +63,13 @@ def input_students
       hobby = name_cohort_hobby.split(",")[2].capitalize || "Unspecified"
       # Get rid of the potential " " after diving commas
       hobby = hobby[1..-1].capitalize if hobby[0] == " "
-      @students << {name: name, cohort: cohort, hobby: hobby}
+      add_students(name, cohort, hobby)
       if @students.count == 1
          puts "We now have 1 student"
       else
          puts "We now have #{@students.count} students"
       end
-      name_cohort_hobby = gets.chomp
+      name_cohort_hobby = STDIN.gets.chomp
    end
 end
 
@@ -122,9 +126,30 @@ def load_students(filename = "students.csv")
    @students = []
    file.readlines.each do |line|
       name, cohort, hobby = line.chomp.split(",")
-      @students << {name: name, cohort: cohort, hobby: hobby}
+      add_students(name, cohort, hobby)
    end
    file.close
 end
 
+def try_load_students
+   # load the data if the file is given as an argument
+   filename = ARGV.first
+   #         if not, proceed as before
+   return if filename.nil?
+   if File.exists?(filename)
+      load_students(filename)
+      puts "Loaded #{@students.count} from #{filename}"
+   else
+      puts "Sorry #{filename} does not exist."
+      exit
+   end
+end
+
+def add_students(name, cohort, hobby)
+   @students << {name: name, cohort: cohort, hobby: hobby}
+end
+
+
+# We try to load students the argument passed when program when
+try_load_students
 interactive_menu

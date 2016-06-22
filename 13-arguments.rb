@@ -3,7 +3,7 @@
 def interactive_menu
    loop do
       print_menu
-      process(gets.chomp)
+      process(STDIN.gets.chomp)
    end
 end
 
@@ -46,11 +46,11 @@ def input_students
    puts "Leave the cohort or hobby field blank if you wish"
    puts "To finish, just hit return twice"
    @students = []
-   name_cohort_hobby = gets.chomp
+   name_cohort_hobby = STDIN.gets.chomp
    while !name_cohort_hobby.empty? do
       while name_cohort_hobby.count(",") != 2
          puts "Please use the format: name,cohort,hobby (with two \",\"s)"
-         name_cohort_hobby = gets.chomp
+         name_cohort_hobby = STDIN.gets.chomp
       end
       name = name_cohort_hobby.split(",")[0]
       cohort = name_cohort_hobby.split(",")[1].capitalize || "Unspecified"
@@ -65,7 +65,7 @@ def input_students
       else
          puts "We now have #{@students.count} students"
       end
-      name_cohort_hobby = gets.chomp
+      name_cohort_hobby = STDIN.gets.chomp
    end
 end
 
@@ -127,4 +127,20 @@ def load_students(filename = "students.csv")
    file.close
 end
 
+def try_load_students
+   # load the data if the file is given as an argument
+   filename = ARGV.first
+   #         if not, proceed as before
+   return if filename.nil?
+   if File.exists?(filename)
+      load_students(filename)
+      puts "Loaded #{@students.count} from #{filename}"
+   else
+      puts "Sorry #{filename} does not exist."
+      exit
+   end
+end
+
+# We try to load students the argument passed when program when
+try_load_students
 interactive_menu
