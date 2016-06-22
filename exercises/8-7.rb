@@ -18,10 +18,10 @@ def input_students
          cohort = name_and_cohort.split(",")[1].capitalize
          # Why do I need this capitalize here??
          cohort = cohort[1..-1].capitalize if cohort[0] == " "
-         students << {name: name, cohort: cohort}
-         puts "We now have #{students.count} students"
-         name_and_cohort = gets.chomp
       end
+      students << {name: name, cohort: cohort}
+      puts "We now have #{students.count} students"
+      name_and_cohort = gets.chomp
    end
    students
 end
