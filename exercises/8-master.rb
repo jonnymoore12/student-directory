@@ -25,7 +25,7 @@ def input_students
       else
          puts "We now have #{students.count} students"
       end
-      name_and_cohort = gets.chop
+      name_and_cohort = gets.chomp
    end
    students
 end
