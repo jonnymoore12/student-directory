@@ -70,9 +70,7 @@ end
 
 def print(students, cohort_months)
    linewidth = 100
-   if students.empty?
-      puts "Nothing to print yo!"
-   end
+   puts "Nothing to print yo!" if students.empty?
    cohort_months.each do |month|
       students.each_with_index do |student, index|
          # Or you can use student["name"] if your hash was set up like so:
