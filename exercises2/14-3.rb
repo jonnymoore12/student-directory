@@ -1,6 +1,5 @@
 # My code differs from the Makers code, since I am storing hobbies as well
 # I'm also checking user input for various typos
-# But then, I'm sure input_students could be refactored further
 
 @students = []
 
@@ -71,7 +70,7 @@ def input_students
 end
 
 def default_whitespace_capitalize(data)
-   return "Unspecified" if data.nil?
+   return "Unspecified" if data.nil? || data == "" || data == " "
    # remove potential leading whitespace
    data = data[1..-1] if data[0] == " "
    # capitalize for consistency

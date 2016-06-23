@@ -53,7 +53,6 @@ def show_students
    print_footer
 end
 
-
 def input_students
    puts "Please enter the names, cohorts and favourite hobbies of the students"
    puts "Please enter in the format: name, cohort, favourite hobby"
@@ -66,13 +65,10 @@ def input_students
          puts "Please use the format: name,cohort,hobby (with two \",\"s)"
          name_cohort_hobby = STDIN.gets.chomp
       end
-      name = name_cohort_hobby.split(",")[0]
-      cohort = name_cohort_hobby.split(",")[1].capitalize || "Unspecified"
-      # Get rid of the potential " " after diving commas
-      cohort = cohort[1..-1].capitalize if cohort[0] == " "
-      hobby = name_cohort_hobby.split(",")[2].capitalize || "Unspecified"
-      # Get rid of the potential " " after diving commas
-      hobby = hobby[1..-1].capitalize if hobby[0] == " "
+      name, cohort, hobby = name_cohort_hobby.split(",")
+      name = default_whitespace_capitalize(name)
+      cohort = default_whitespace_capitalize(cohort)
+      hobby = default_whitespace_capitalize(hobby)
       add_students(name, cohort, hobby)
       if @students.count == 1
          puts "We now have 1 student"
@@ -81,6 +77,14 @@ def input_students
       end
       name_cohort_hobby = STDIN.gets.chomp
    end
+end
+
+def default_whitespace_capitalize(data)
+   return "Unspecified" if data.nil? || data == "" || data == " "
+   # remove potential leading whitespace
+   data = data[1..-1] if data[0] == " "
+   # capitalize for consistency
+   data = data.capitalize
 end
 
 def cohorts
