@@ -129,14 +129,14 @@ def save_students
    puts "students.csv"
    filename = gets.chomp
    filename = "students.csv" if filename == ""
-   file = File.open("#{filename}", "w")
-   # Iterate over the array of students
-   @students.each do |student|
-      student_data = [student[:name], student[:cohort], student[:hobby]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+   # Here's the alternate file writing stuff
+   File.open(filename, "w") do |f1|
+      @students.each do |student|
+         student_data = [student[:name], student[:cohort], student[:hobby]]
+         csv_line = student_data.join(",")
+         f1.puts csv_line
+      end
    end
-   file.close
 end
 
 def load_students(filename = "students.csv")
@@ -144,13 +144,16 @@ def load_students(filename = "students.csv")
    puts "from students.csv"
    filename = gets.chomp
    filename = "students.csv" if filename == ""
-   file = File.open(filename, "r")
-   @students = []
-   file.readlines.each do |line|
-      name, cohort, hobby = line.chomp.split(",")
-      add_students(name, cohort, hobby)
+
+   File.open(filename, "r") do |f2|
+      @students = []
+      while line = f2.gets
+         file.readlines.each do |line|
+            name, cohort, hobby = line.chomp.split(",")
+            add_students(name, cohort, hobby)
+         end
+      end
    end
-   file.close
 end
 
 def try_load_students(filename = "students.csv")
