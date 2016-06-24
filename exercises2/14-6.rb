@@ -134,6 +134,7 @@ def save_students
       @students.each do |student|
          student_data = [student[:name], student[:cohort], student[:hobby]]
          csv_line = student_data.join(",")
+         # Here's where f1 actually does something
          f1.puts csv_line
       end
    end
@@ -147,11 +148,11 @@ def load_students(filename = "students.csv")
 
    File.open(filename, "r") do |f2|
       @students = []
-      while line = f2.gets
-         file.readlines.each do |line|
-            name, cohort, hobby = line.chomp.split(",")
-            add_students(name, cohort, hobby)
-         end
+      # Similary, here we use f2 instead of "file" that we used when
+      # we set file = File.open(filename, "r")
+      f2.readlines.each do |line|
+         name, cohort, hobby = line.chomp.split(",")
+         add_students(name, cohort, hobby)
       end
    end
 end
